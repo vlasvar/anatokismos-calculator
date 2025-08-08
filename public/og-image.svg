@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0b1220"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="s" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g opacity="0.12">
+    <circle cx="200" cy="120" r="160" fill="url(#g)"/>
+    <circle cx="1000" cy="560" r="200" fill="url(#g)"/>
+  </g>
+  <g transform="translate(80,80)">
+    <rect x="0" y="0" width="1040" height="420" rx="20" fill="#0b1220" stroke="#1f2937"/>
+    <polyline fill="none" stroke="url(#g)" stroke-width="6"
+      points="20,360 140,340 220,320 300,295 380,310 460,260 540,280 620,230 700,210 780,170 860,140 940,90" />
+    <g fill="#1f2937">
+      <path d="M20 360 H1040"/>
+      <path d="M20 260 H1040"/>
+      <path d="M20 160 H1040"/>
+      <path d="M20 60 H1040"/>
+    </g>
+  </g>
+  <g transform="translate(80,530)">
+    <text x="0" y="0" fill="#e5e7eb" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="56" font-weight="700">anatokismos.gr</text>
+    <text x="0" y="48" fill="#94a3b8" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="28">Υπολογιστής Ανατοκισμού • Σύνθετος Τόκος</text>
+  </g>
+  <g transform="translate(980,110)" filter="url(#s)">
+    <circle r="40" fill="#0b1220" stroke="#22c55e" stroke-width="4"/>
+    <text text-anchor="middle" dominant-baseline="middle" y="4" fill="#22c55e" font-size="40" font-family="Inter, system-ui">€</text>
+  </g>
+</svg> 
