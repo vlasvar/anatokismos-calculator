@@ -140,15 +140,6 @@ const Index = () => {
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
           Υπολογιστής Ανατοκισμού (Σύνθετου Τόκου)
         </h1>
-        <div className="mt-4">
-          <Link to="/articles" className="text-primary underline">Άρθρα — Τι είναι ο σύνθετος τόκος & παραδείγματα</Link>
-        </div>
-        <p className="mt-2 text-muted-foreground max-w-2xl">
-          Υπολογίστε την ανάπτυξη της αποταμίευσής σας με τακτικές καταθέσεις και ανατοκισμό. Επιλέξτε συχνότητα ανατοκισμού και κατάθεσης, και δείτε αναλυτικό πίνακα ανά έτος.
-        </p>
-        <div className="mt-4">
-          <Link to="/articles" className="text-primary underline">Άρθρα — Τι είναι ο σύνθετος τόκος & παραδείγματα</Link>
-        </div>
       </header>
 
       {/* Informational article section for homepage (Greek) */}
