@@ -16,7 +16,11 @@ All colors MUST be HSL.
     --brand-rust: 9 98% 34%;           /* rgb(173,27,2)    */
     --brand-black: 0 0% 0%;            /* rgb(0,0,0)       */
 
+    /* System colors */
     --background: 0 0% 100%;
+    --border: 220 13% 91%;
+    --border-light: 220 13% 95%;
+    --border-dark: 220 13% 85%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -104,12 +108,19 @@ All colors MUST be HSL.
   }
 }
 
+:root {
+  --app-background: hsl(var(--background));
+  --app-foreground: hsl(var(--foreground));
+  --app-border: hsl(var(--border));
+}
+
 @layer base {
-  * {
-    @apply border-border;
+  html {
+    background-color: var(--app-background);
+    color: var(--app-foreground);
   }
 
-  body {
-    @apply bg-background text-foreground;
+  * {
+    border-color: var(--app-border);
   }
 }

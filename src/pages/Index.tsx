@@ -143,10 +143,10 @@ const Index = () => {
       </header>
 
       {/* Informational article section for homepage (Greek) */}
-      <section className="container mx-auto px-4 pb-8">
-        <Card className="prose max-w-none p-6">
-          <CardHeader>
-            <CardTitle>
+      <section className="container mx-auto px-4 py-12">
+        <Card className="prose prose-lg max-w-none p-8 lg:p-12">
+          <CardHeader className="pb-8">
+            <CardTitle className="text-3xl lg:text-4xl">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Ο ανατοκισμός μπορεί να μεταμορφώσει την αποταμίευσή σας</span>
             </CardTitle>
           </CardHeader>

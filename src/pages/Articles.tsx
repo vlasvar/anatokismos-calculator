@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import ARTICLES from "@/content/articles";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 function formatCurrency(n: number) {
   return new Intl.NumberFormat("el-GR", { style: "currency", currency: "EUR" }).format(n);
@@ -15,22 +16,32 @@ const Articles = () => {
         <meta name="description" content="Άρθρα και επεξηγήσεις για τον σύνθετο τόκο και το πώς να τον χρησιμοποιήσετε για αποταμίευση και επενδύσεις (Ελληνικά)." />
       </Helmet>
 
-      <header className="container mx-auto px-4 pt-12 pb-6">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">Άρθρα — Ανατοκισμός</h1>
-        <p className="mt-2 text-muted-foreground max-w-2xl">Επεξηγήσεις και παραδείγματα για τον σύνθετο τόκο, στην ελληνική γλώσσα.</p>
-      </header>
+      <div className="container max-w-7xl mx-auto px-4 py-16">
+        <header className="max-w-3xl mx-auto mb-16">
+          <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-foreground mb-6">Άρθρα — Ανατοκισμός</h1>
+          <p className="text-xl text-muted-foreground leading-relaxed">Επεξηγήσεις και παραδείγματα για τον σύνθετο τόκο, στην ελληνική γλώσσα.</p>
+        </header>
 
-      <section className="container mx-auto px-4 pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {ARTICLES.map((a) => (
-            <article key={a.slug} className="p-6 border rounded-md">
-              <h2 className="text-xl font-semibold mb-2">{a.title}</h2>
-              <p className="text-sm text-muted-foreground mb-4">{a.summary}</p>
-              <Link to={`/articles/${a.slug}`} className="text-primary underline">Διαβάστε περισσότερα →</Link>
-            </article>
+            <Card key={a.slug} className="flex flex-col">
+              <CardHeader className="space-y-3">
+                <CardTitle className="text-2xl font-bold tracking-tight">{a.title}</CardTitle>
+                <p className="text-muted-foreground leading-relaxed">{a.summary}</p>
+              </CardHeader>
+              <CardContent className="flex-1" />
+              <div className="px-6 pb-6">
+                <Link
+                  to={`/articles/${a.slug}`}
+                  className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+                >
+                  Διαβάστε περισσότερα →
+                </Link>
+              </div>
+            </Card>
           ))}
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
   );
 };
@@ -55,15 +66,24 @@ export const ArticlePage = () => {
         <meta name="description" content={article.summary} />
       </Helmet>
 
-      <header className="container mx-auto px-4 pt-12 pb-6">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">{article.title}</h1>
-        <p className="mt-2 text-muted-foreground max-w-2xl">{article.summary}</p>
+      <header className="container max-w-7xl mx-auto px-4 pt-16 pb-8">
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-6">{article.title}</h1>
+          <p className="text-xl text-muted-foreground leading-relaxed">{article.summary}</p>
+        </div>
       </header>
 
-      <section className="container mx-auto px-4 pb-16">
-        <div className="prose max-w-none">{article.content}</div>
-        <div className="mt-8">
-          <Link to="/articles" className="text-muted-foreground underline">← Πίσω στη λίστα άρθρων</Link>
+      <section className="container max-w-7xl mx-auto px-4 pb-16">
+        <div className="max-w-3xl mx-auto">
+          <div className="prose prose-lg dark:prose-invert">{article.content}</div>
+          <div className="mt-12 pt-6 border-t">
+            <Link 
+              to="/articles" 
+              className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← Πίσω στη λίστα άρθρων
+            </Link>
+          </div>
         </div>
       </section>
     </main>
