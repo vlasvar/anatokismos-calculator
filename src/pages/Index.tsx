@@ -5,6 +5,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useI18n } from "@/i18n";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -112,6 +113,8 @@ const Index = () => {
 
   const canonical = typeof window !== "undefined" ? `${window.location.origin}/` : "/";
 
+  const { t } = useI18n();
+
   return (
     <main className="min-h-screen bg-background">
       <Helmet>
@@ -136,70 +139,29 @@ const Index = () => {
         })}</script>
       </Helmet>
 
-      <header className="container mx-auto px-4 pt-12 pb-6">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-          Υπολογιστής Ανατοκισμού (Σύνθετου Τόκου)
-        </h1>
+      <header className="container mx-auto px-4 pt-8 pb-4">
+        <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">{t("header.title")}</h1>
       </header>
 
-      {/* Informational article section for homepage (Greek) */}
-      <section className="container mx-auto px-4 py-12">
-        <Card className="prose prose-lg max-w-none p-8 lg:p-12">
-          <CardHeader className="pb-8">
-            <CardTitle className="text-3xl lg:text-4xl">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Ο ανατοκισμός μπορεί να μεταμορφώσει την αποταμίευσή σας</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div>
-              <p>
-                Ο ανατοκισμός είναι μια μαθηματική έννοια που σχετίζεται με τα χρήματα και τις επενδύσεις, αλλά μπορεί να
-                μεταμορφώσει τη ζωή κάποιου αν την κατανοήσει σωστά. Ας δούμε απλά τι σημαίνει, πώς λειτουργεί και γιατί
-                είναι τόσο δυναμικό εργαλείο για να χτίσει κανείς μια μικρή περιουσία.
-              </p>
+      {/* Compact intro moved into the calculator section to keep the calculator visible */}
 
-              <h3>Τι είναι ο ανατοκισμός;</h3>
-              <p>
-                Ο ανατοκισμός (ή σύνθετος τόκος) είναι όταν τα χρήματα που κερδίζεις από τους τόκους μιας επένδυσης
-                προστίθενται στο αρχικό σου κεφάλαιο, και επενδύονται ξανά. Έτσι, το επόμενο διάστημα, οι τόκοι
-                υπολογίζονται όχι μόνο πάνω στο αρχικό ποσό που είχες βάλει, αλλά και πάνω στους προηγούμενους τόκους που
-                έχεις ήδη κερδίσει. Φαντάσου να φυτεύεις ένα δέντρο και κάθε χρόνο το ίδιο το δέντρο γεννά καινούρια μικρά
-                δέντρα που επίσης μεγαλώνουν και σου δίνουν καρπούς.
-              </p>
-
-              <h3>Γιατί είναι χρήσιμος ο ανατοκισμός;</h3>
-              <ul>
-                <li>Όσο πιο συχνά επανεπενδύονται οι τόκοι, τόσο πιο γρήγορα μεγαλώνει το κεφάλαιό σου.</li>
-                <li>Ακόμα και μικρά μηνιαία ποσά, μέσω της δύναμης του ανατοκισμού, μπορούν να οδηγήσουν σε σημαντικά ποσά στο μέλλον.</li>
-                <li>Ο ανατοκισμός λειτουργεί σαν «επιταχυντής» πλούτου – όσο περισσότερο χρόνο του δώσεις, τόσο πιο εντυπωσιακά αποτελέσματα έχει.</li>
-              </ul>
-
-              <h3>Πώς να χτίσεις μικρή περιουσία με αποταμίευση και επένδυση</h3>
-              <ol>
-                <li><strong>Ξεκίνα όσο νωρίτερα γίνεται.</strong> Ο χρόνος είναι το πιο σημαντικό συστατικό του ανατοκισμού.</li>
-                <li><strong>Βάλε ένα αρχικό κεφάλαιο και πρόσθεσε μικρά μηνιαία ποσά.</strong> Ακόμη και 50€ το μήνα μπορούν να κάνουν μεγάλη διαφορά σε δεκαετίες.</li>
-                <li><strong>Επίλεξε επένδυση που δίνει σύνθετο τόκο.</strong> Τράπεζες, επενδυτικά κεφάλαια και ορισμένες επενδύσεις παρέχουν ανατοκισμό.</li>
-                <li><strong>Μη βιαστείς να κάνεις ανάληψη.</strong> Όσο μένουν τα χρήματα «μέσα», ο ανατοκισμός δουλεύει για σένα.</li>
-                <li><strong>Χρησιμοποίησε εργαλεία όπως αυτόν τον υπολογιστή.</strong> Δοκίμασε διαφορετικά σενάρια και δες πόση δύναμη έχει ο χρόνος και η συνέπεια.</li>
-              </ol>
-
-              <h3 className="mt-4">Συμπέρασμα</h3>
-              <p>
-                Ο ανατοκισμός είναι το μυστικό για να χτίσεις πλούτο σιγά-σιγά και μεθοδικά, χωρίς να χρειάζεται να έχεις
-                πολλά χρήματα από την αρχή. Η βασική του δύναμη είναι ο χρόνος και η σταθερή αποταμίευση. Όσο πιο νωρίς
-                ξεκινήσεις και όσο πιο συνεπής είσαι, τόσο πιο εντυπωσιακά θα δεις τα αποτελέσματα στο μέλλον.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      <section className="container mx-auto px-4 pb-16 relative">
+  <section className="container mx-auto px-4 pb-16 relative">
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="mx-auto h-64 md:h-80 w-full max-w-5xl rounded-full blur-3xl opacity-40 bg-gradient-to-r from-primary/20 to-accent/20" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-6">
+          {/* Compact introduction column (lg) - shorter copy and smaller type */}
+          <Card className="lg:col-span-2 p-6 prose prose-sm max-w-none">
+            <CardHeader>
+              <CardTitle className="text-lg lg:text-xl">{t("intro.title")}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="mb-2">{t("intro.p1")}</p>
+              <p className="text-sm text-muted-foreground">{t("intro.p2")}</p>
+            </CardContent>
+          </Card>
+
           <Card className="lg:col-span-2">
             <CardHeader>
               <CardTitle>Ρυθμίσεις Υπολογισμού</CardTitle>
@@ -279,7 +241,7 @@ const Index = () => {
             </CardContent>
           </Card>
 
-          <div className="lg:col-span-3 space-y-6">
+          <div className="lg:col-span-2 space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>Αποτελέσματα</CardTitle>

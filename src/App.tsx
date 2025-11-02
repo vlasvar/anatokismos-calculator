@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Layout } from "@/components/layout/Layout";
+import { I18nProvider } from "@/i18n";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Articles from "./pages/Articles";
@@ -19,8 +20,9 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Layout>
-            <Routes>
+          <I18nProvider>
+            <Layout>
+              <Routes>
               <Route path="/" element={<Index />} />
               {/* Articles and content pages */}
               <Route path="/articles" element={<Articles />} />
@@ -28,11 +30,12 @@ const App = () => (
               {/* Legal pages */}
               <Route path="/terms" element={<div className="container py-8"><h1>Όροι Χρήσης</h1></div>} />
               <Route path="/privacy" element={<div className="container py-8"><h1>Πολιτική Απορρήτου</h1></div>} />
-              <Route path="/about" element={<div className="container py-8"><h1>Σχετικά</h1></div>} />
+              {/* /about removed until content is available */}
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
+              </Routes>
+            </Layout>
+          </I18nProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
