@@ -200,6 +200,177 @@ export const ARTICLES: Article[] = [
       </div>
     ),
   },
+
+  {
+    slug: "what-is-compound-interest",
+    title: "What is compound interest?",
+    summary:
+      "A basic explanation of compound interest and why it matters for saving and investing.",
+    content: (
+      <div className="prose prose-lg dark:prose-invert">
+        <h2 className="font-bold">
+          The most powerful “magic” in finance — and why it matters to you
+        </h2>
+
+        <p className="lead">
+          If you’ve ever heard the phrase “let your money work for you,” you already have a small idea of what compound interest is. It’s a simple but extremely powerful mechanism that can make your savings or investments grow almost by themselves.
+        </p>
+
+        <h3 className="font-semibold">How it works</h3>
+        <p>
+          Let’s put it as simply as possible. When you set some money aside — say €1,000 — and earn interest, for example 5% per year, at the end of the year you have €1,050.
+        </p>
+
+        <p>
+          But if you don’t spend that money and leave the €1,050 for another year at the same interest rate, the interest will be calculated not only on the original €1,000, but also on the €50 you earned. So in the second year you earn interest on the interest.
+        </p>
+
+        <div className="my-8 p-6 bg-muted rounded-lg">
+          <p className="!mt-0 font-medium">
+            That is exactly compound interest: interest that “generates” more interest over time.
+          </p>
+        </div>
+
+        <h3 className="font-semibold">Why it’s so important</h3>
+        <p>
+          Compound interest has a kind of magic — it gets stronger with time. The longer you let your money work, the faster it grows. It’s not complicated; it’s just straightforward math.
+        </p>
+
+        <h3 className="font-semibold">Example</h3>
+        <p>
+          If you save €100 per month with an average return of 5% per year, in 20 years you won’t have only the €24,000 you contributed. You’ll have almost €40,000. That difference of €16,000 is the “gift” of compound interest.
+        </p>
+
+        <h3 className="font-semibold">The secret is patience</h3>
+        <p>
+          Compound interest is not a “quick road to riches.” It’s a tool of patience. The earlier you start, the more time it has to work for you.
+        </p>
+
+        <div className="my-8 p-6 bg-card rounded-lg border">
+          <p className="!mt-0">
+            <em>
+              Think of it like a tree: at first you plant the seed (your initial money) and then you simply water it (with regular saving). Over the years the tree grows and bears fruit faster and faster.
+            </em>
+          </p>
+        </div>
+
+        <h3 className="font-semibold">How to take advantage of it</h3>
+        <ul className="space-y-2">
+          <li>✓ Start early — even small amounts make a big difference over time.</li>
+          <li>✓ Avoid withdrawing frequently — compound interest works only when you let it “build.”</li>
+          <li>✓ Invest consistently — whether a savings plan or other investment, consistency produces results.</li>
+        </ul>
+
+        <blockquote>
+          <p>
+            “Compound interest is the eighth wonder of the world. He who understands it, earns it; he who doesn’t, pays it.”
+          </p>
+          <footer>
+            — Albert Einstein
+          </footer>
+        </blockquote>
+
+        <p>
+          In short: the earlier you start, the more time works for you — rather than you always working for your money.
+        </p>
+
+        <div className="mt-12">
+          <Button asChild size="lg">
+            <Link to="/">Try the Calculator →</Link>
+          </Button>
+        </div>
+      </div>
+    ),
+  },
+
+  {
+    slug: "example-how-it-works",
+    title: "Example: How it works in an investment",
+    summary:
+      "A numeric example showing how regular deposits and compounding grow your capital over the years.",
+    content: (
+      <div className="prose prose-lg dark:prose-invert">
+        <p className="lead">
+          Suppose you decide to start saving €100 per month into an investment plan that gives an annual return of 5% (about 0.4% per month).
+        </p>
+
+        <div className="my-8 p-6 bg-muted rounded-lg">
+          <p className="!mt-0">
+            At first that may seem small, but see how compounding works over time:
+          </p>
+        </div>
+
+        <table className="table-auto border-collapse border border-gray-300 w-full text-left">
+          <thead>
+            <tr>
+              <th className="border border-gray-300 px-4 py-2">Year</th>
+              <th className="border border-gray-300 px-4 py-2">Total contributions</th>
+              <th className="border border-gray-300 px-4 py-2">Interest/Gains</th>
+              <th className="border border-gray-300 px-4 py-2">Total balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="border border-gray-300 px-4 py-2">1st</td>
+              <td className="border border-gray-300 px-4 py-2">€1,200</td>
+              <td className="border border-gray-300 px-4 py-2">€31</td>
+              <td className="border border-gray-300 px-4 py-2">€1,231</td>
+            </tr>
+            <tr>
+              <td className="border border-gray-300 px-4 py-2">5th</td>
+              <td className="border border-gray-300 px-4 py-2">€6,000</td>
+              <td className="border border-gray-300 px-4 py-2">€680</td>
+              <td className="border border-gray-300 px-4 py-2">€6,680</td>
+            </tr>
+            <tr>
+              <td className="border border-gray-300 px-4 py-2">10th</td>
+              <td className="border border-gray-300 px-4 py-2">€12,000</td>
+              <td className="border border-gray-300 px-4 py-2">€2,430</td>
+              <td className="border border-gray-300 px-4 py-2">€14,430</td>
+            </tr>
+            <tr>
+              <td className="border border-gray-300 px-4 py-2">20th</td>
+              <td className="border border-gray-300 px-4 py-2">€24,000</td>
+              <td className="border border-gray-300 px-4 py-2">€15,700</td>
+              <td className="border border-gray-300 px-4 py-2">€39,700</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p className="text-sm text-muted-foreground">
+          Numbers are illustrative, based on monthly compounding at 5% yearly.
+        </p>
+
+        <p>
+          You can see how, as time passes, the interest grows faster and faster. That happens because each year you earn interest not only on the money you deposited but also on the interest from previous years.
+        </p>
+
+        <h3 className="font-semibold">If you stop after 20 years</h3>
+        <p>
+          Suppose after 20 years you stop making deposits, but you leave the €39,700 to “work” at the same 5%.
+        </p>
+
+        <p>
+          In just 10 more years without adding another euro, the amount would reach roughly €65,000!
+        </p>
+
+        <h3 className="font-semibold">Conclusion</h3>
+        <p>
+          Compounding is like a snowball rolling downhill — at first it’s small, but as it rolls it gathers more snow and becomes huge.
+        </p>
+
+        <p>
+          The earlier you start and the more consistent you are, the more impressive the results will be.
+        </p>
+
+        <div className="mt-12">
+          <Button asChild size="lg">
+            <Link to="/">Try the Calculator →</Link>
+          </Button>
+        </div>
+      </div>
+    ),
+  },
 ];
 
 export default ARTICLES;

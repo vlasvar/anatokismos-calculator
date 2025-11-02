@@ -86,6 +86,13 @@ function computeSchedule(values: FormValues) {
   return { balance, totalDeposits, totalInterest, realBalance, schedule };
 }
 
+const Stat = ({ label, value, colorClass }: { label: string; value: string; colorClass: string }) => (
+  <div className={`p-4 rounded-lg bg-gradient-to-r ${colorClass}`}>
+    <p className="text-sm font-medium text-muted-foreground">{label}</p>
+    <p className="text-xl font-semibold text-foreground">{value}</p>
+  </div>
+);
+
 const Index = () => {
   const [submitted, setSubmitted] = useState<FormValues | null>(null);
 
@@ -101,29 +108,39 @@ const Index = () => {
     setSubmitted(values);
   };
 
+  const { t } = useI18n();
+
+  // Extract translations before useMemo calls
+  const chartLabels = {
+    finalBalance: t("stats.finalBalance"),
+    totalDeposits: t("stats.totalDeposits"),
+    totalInterest: t("stats.totalInterest"),
+  };
+
+  // Update useMemo to use extracted translations
+  const memoizedChartLabels = useMemo(() => chartLabels, []);
+
   const scheduleData = useMemo(() => {
     if (!results) return [] as any[];
     return results.schedule.map((row) => ({
       year: row.year,
-      "Τελικό Υπόλοιπο": row.endBalance,
-      "Καταθέσεις": row.deposits,
-      "Τόκοι": row.interest,
+      finalBalance: row.endBalance,
+      totalDeposits: row.deposits,
+      totalInterest: row.interest
     }));
   }, [results]);
 
   const canonical = typeof window !== "undefined" ? `${window.location.origin}/` : "/";
 
-  const { t } = useI18n();
-
   return (
     <main className="min-h-screen bg-background">
       <Helmet>
-        <title>anatokismos.gr • Υπολογιστής Ανατοκισμού</title>
-        <meta name="description" content="Ελληνικός υπολογιστής ανατοκισμού: υπολογίστε σύνθετο τόκο, τελικό υπόλοιπο και τόκους με μηνιαίες καταθέσεις και γράφημα." />
+        <title>{t("meta.title")}</title>
+        <meta name="description" content={t("meta.description")} />
         <link rel="canonical" href={canonical} />
         <meta property="og:site_name" content="anatokismos.gr" />
-        <meta property="og:title" content="Υπολογιστής Ανατοκισμού" />
-        <meta property="og:description" content="Υπολογίστε σύνθετο τόκο, τελικό υπόλοιπο και τόκους με μηνιαίες καταθέσεις." />
+        <meta property="og:title" content={t("header.title")} />
+        <meta property="og:description" content={t("meta.description")} />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="/og-image.png" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -131,10 +148,10 @@ const Index = () => {
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebApplication",
-          name: "Υπολογιστής Ανατοκισμού — anatokismos.gr",
+          name: `${t("header.title")} — anatokismos.gr`,
           applicationCategory: "FinanceApplication",
           inLanguage: "el-GR",
-          description: "Υπολογίστε σύνθετο τόκο, τελικό υπόλοιπο και τόκους με ελληνικό υπολογιστή ανατοκισμού.",
+          description: t("meta.description"),
           offers: { "@type": "Offer", price: 0, priceCurrency: "EUR" }
         })}</script>
       </Helmet>
@@ -150,9 +167,10 @@ const Index = () => {
           <div className="mx-auto h-64 md:h-80 w-full max-w-5xl rounded-full blur-3xl opacity-40 bg-gradient-to-r from-primary/20 to-accent/20" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-6 gap-6">
-          {/* Compact introduction column (lg) - shorter copy and smaller type */}
-          <Card className="lg:col-span-2 p-6 prose prose-sm max-w-none">
+        {/* Top row: Introduction and Calculator */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          {/* Introduction column */}
+          <Card className="p-6 prose prose-sm max-w-none">
             <CardHeader>
               <CardTitle className="text-lg lg:text-xl">{t("intro.title")}</CardTitle>
             </CardHeader>
@@ -162,67 +180,68 @@ const Index = () => {
             </CardContent>
           </Card>
 
-          <Card className="lg:col-span-2">
+          {/* Calculator column */}
+          <Card>
             <CardHeader>
-              <CardTitle>Ρυθμίσεις Υπολογισμού</CardTitle>
+              <CardTitle>{t("settings.title")}</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="principal">Αρχικό κεφάλαιο (€)</Label>
+                    <Label htmlFor="principal">{t("form.principal")}</Label>
                     <Input id="principal" type="number" step="0.01" {...form.register("principal", { valueAsNumber: true })} />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="contribution">Μηνιαία κατάθεση (€)</Label>
+                    <Label htmlFor="contribution">{t("form.contribution")}</Label>
                     <Input id="contribution" type="number" step="0.01" {...form.register("contribution", { valueAsNumber: true })} />
                   </div>
                 </div>
 
                 <div className="grid sm:grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="rate">Ετήσιο επιτόκιο (%)</Label>
+                    <Label htmlFor="rate">{t("form.rate")}</Label>
                     <Input id="rate" type="number" step="0.01" {...form.register("rate", { valueAsNumber: true })} />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="years">Διάρκεια (έτη)</Label>
+                    <Label htmlFor="years">{t("form.years")}</Label>
                     <Input id="years" type="number" step="1" {...form.register("years", { valueAsNumber: true })} />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="inflation">Πληθωρισμός (%)</Label>
+                    <Label htmlFor="inflation">{t("form.inflation")}</Label>
                     <Input id="inflation" type="number" step="0.01" {...form.register("inflation", { valueAsNumber: true })} />
                   </div>
                 </div>
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Συχνότητα ανατοκισμού</Label>
+                    <Label>{t("form.compounding")}</Label>
                     <Select defaultValue={form.getValues("compounding")} onValueChange={(v) => form.setValue("compounding", v as FormValues["compounding"]) }>
                       <SelectTrigger>
-                        <SelectValue placeholder="Επιλέξτε" />
+                        <SelectValue placeholder={t("select.placeholder")} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="daily">Καθημερινά</SelectItem>
-                        <SelectItem value="weekly">Εβδομαδιαία</SelectItem>
-                        <SelectItem value="monthly">Μηνιαία</SelectItem>
-                        <SelectItem value="quarterly">Τριμηνιαία</SelectItem>
-                        <SelectItem value="semiannual">Εξαμηνιαία</SelectItem>
-                        <SelectItem value="annual">Ετήσια</SelectItem>
-                        <SelectItem value="continuous">Συνεχής</SelectItem>
+                        <SelectItem value="daily">{t("select.compounding.daily")}</SelectItem>
+                        <SelectItem value="weekly">{t("select.compounding.weekly")}</SelectItem>
+                        <SelectItem value="monthly">{t("select.compounding.monthly")}</SelectItem>
+                        <SelectItem value="quarterly">{t("select.compounding.quarterly")}</SelectItem>
+                        <SelectItem value="semiannual">{t("select.compounding.semiannual")}</SelectItem>
+                        <SelectItem value="annual">{t("select.compounding.annual")}</SelectItem>
+                        <SelectItem value="continuous">{t("select.compounding.continuous")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
                   <div className="space-y-2">
-                    <Label>Συχνότητα καταθέσεων</Label>
+                    <Label>{t("form.contributionFrequency")}</Label>
                     <Select defaultValue={String(form.getValues("contributionFrequency"))} onValueChange={(v) => form.setValue("contributionFrequency", parseInt(v)) }>
                       <SelectTrigger>
-                        <SelectValue placeholder="Επιλέξτε" />
+                        <SelectValue placeholder={t("select.placeholder")} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="12">Μηνιαία</SelectItem>
-                        <SelectItem value="52">Εβδομαδιαία</SelectItem>
-                        <SelectItem value="1">Ετήσια</SelectItem>
+                        <SelectItem value="12">{t("select.contribution.monthly")}</SelectItem>
+                        <SelectItem value="52">{t("select.contribution.weekly")}</SelectItem>
+                        <SelectItem value="1">{t("select.contribution.annual")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -230,39 +249,40 @@ const Index = () => {
 
                 <div className="flex items-center justify-between rounded-md border p-3">
                   <div>
-                    <Label className="font-medium">Καταθέσεις στην αρχή της περιόδου</Label>
-                    <p className="text-sm text-muted-foreground">Αν ενεργό, οι καταθέσεις γίνονται στην αρχή κάθε περιόδου.</p>
+                    <Label className="font-medium">{t("form.due.label")}</Label>
+                    <p className="text-sm text-muted-foreground">{t("form.due.description")}</p>
                   </div>
                   <Switch checked={form.watch("due")} onCheckedChange={(c) => form.setValue("due", c)} />
                 </div>
 
-                <Button type="submit" className="w-full">Υπολογισμός</Button>
+                <Button type="submit" className="w-full">{t("form.calcButton")}</Button>
               </form>
             </CardContent>
           </Card>
+        </div>
 
-          <div className="lg:col-span-2 space-y-6">
+        {/* Bottom row: Results section */}
+        {results && (
+          <div className="space-y-6">
+            {/* Results overview */}
             <Card>
               <CardHeader>
-                <CardTitle>Αποτελέσματα</CardTitle>
+                <CardTitle>{t("results.title")}</CardTitle>
               </CardHeader>
               <CardContent>
-                {results ? (
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <Stat label="Τελικό υπόλοιπο" value={formatCurrency(results.balance)} colorClass="from-[hsl(var(--brand-orange))] to-[hsl(var(--brand-yellow))]" />
-                    <Stat label="Σύνολο καταθέσεων" value={formatCurrency(results.totalDeposits)} colorClass="from-[hsl(var(--brand-pink))] to-[hsl(var(--brand-orange))]" />
-                    <Stat label="Σύνολο τόκων" value={formatCurrency(results.totalInterest)} colorClass="from-[hsl(var(--brand-orange-dark))] to-[hsl(var(--brand-rust))]" />
-                    <Stat label="Πραγματικό υπόλοιπο (με πληθωρισμό)" value={formatCurrency(results.realBalance)} colorClass="from-[hsl(var(--brand-yellow))] to-[hsl(var(--brand-pink))]" />
-                  </div>
-                ) : (
-                  <p className="text-muted-foreground">Συμπληρώστε τα πεδία και πατήστε Υπολογισμός για να δείτε τα αποτελέσματα.</p>
-                )}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <Stat label={t("stats.finalBalance")} value={formatCurrency(results.balance)} colorClass="from-[hsl(var(--brand-orange))] to-[hsl(var(--brand-yellow))]" />
+                  <Stat label={t("stats.totalDeposits")} value={formatCurrency(results.totalDeposits)} colorClass="from-[hsl(var(--brand-pink))] to-[hsl(var(--brand-orange))]" />
+                  <Stat label={t("stats.totalInterest")} value={formatCurrency(results.totalInterest)} colorClass="from-[hsl(var(--brand-orange-dark))] to-[hsl(var(--brand-rust))]" />
+                  <Stat label={t("stats.realBalance")} value={formatCurrency(results.realBalance)} colorClass="from-[hsl(var(--brand-yellow))] to-[hsl(var(--brand-pink))]" />
+                </div>
               </CardContent>
             </Card>
 
+            {/* Growth chart */}
             <Card>
               <CardHeader>
-                <CardTitle>Γράφημα Ανάπτυξης</CardTitle>
+                <CardTitle>{t("chart.title")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="h-72">
@@ -282,66 +302,58 @@ const Index = () => {
                           <stop offset="95%" stopColor="hsl(var(--brand-yellow))" stopOpacity={0.05}/>
                         </linearGradient>
                       </defs>
-                      <XAxis dataKey="year" tickLine={false} axisLine={false} />
-                      <YAxis tickLine={false} axisLine={false} tickFormatter={(v) => new Intl.NumberFormat("el-GR", { notation: "compact" }).format(v)} />
-                      <Tooltip formatter={(v: any) => formatCurrency(Number(v))} labelFormatter={(l) => `Έτος ${l}`} />
-                      <Legend />
-                      <Area type="monotone" dataKey="Τελικό Υπόλοιπο" stroke="hsl(var(--brand-orange))" fill="url(#balance)" strokeWidth={2} />
-                      <Area type="monotone" dataKey="Καταθέσεις" stroke="hsl(var(--brand-pink))" fill="url(#deposits)" strokeWidth={2} />
-                      <Area type="monotone" dataKey="Τόκοι" stroke="hsl(var(--brand-yellow))" fill="url(#interest)" strokeWidth={2} />
+                      <XAxis 
+                        dataKey="year" 
+                        tickLine={false} 
+                        axisLine={false}
+                        tickFormatter={(v) => `${v}`} 
+                      />
+                      <YAxis 
+                        tickLine={false} 
+                        axisLine={false} 
+                        tickFormatter={(v) => new Intl.NumberFormat("el-GR", { 
+                          notation: "compact",
+                          maximumFractionDigits: 1 
+                        }).format(v)}
+                      />
+                      <Tooltip 
+                        formatter={(v: any) => formatCurrency(Number(v))} 
+                        labelFormatter={(l) => t("table.year") + " " + l}
+                      />
+                      <Legend 
+                        formatter={(value: string) => value}
+                      />
+                      <Area 
+                        type="monotone"
+                        dataKey="finalBalance"
+                        stroke="hsl(var(--brand-orange))"
+                        fill="url(#balance)"
+                        name={t("stats.finalBalance")}
+                      />
+                      <Area 
+                        type="monotone"
+                        dataKey="totalDeposits"
+                        stroke="hsl(var(--brand-pink))"
+                        fill="url(#deposits)"
+                        name={t("stats.totalDeposits")}
+                      />
+                      <Area 
+                        type="monotone"
+                        dataKey="totalInterest"
+                        stroke="hsl(var(--brand-yellow))"
+                        fill="url(#interest)"
+                        name={t("stats.totalInterest")}
+                      />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
               </CardContent>
             </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Ανάλυση ανά έτος</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {results ? (
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Έτος</TableHead>
-                          <TableHead>Καταθέσεις</TableHead>
-                          <TableHead>Τόκοι</TableHead>
-                          <TableHead>Τελικό υπόλοιπο</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {results.schedule.map((row) => (
-                          <TableRow key={row.year}>
-                            <TableCell>{row.year}</TableCell>
-                            <TableCell>{formatCurrency(row.deposits)}</TableCell>
-                            <TableCell>{formatCurrency(row.interest)}</TableCell>
-                            <TableCell>{formatCurrency(row.endBalance)}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                ) : (
-                  <p className="text-muted-foreground">Δεν υπάρχουν δεδομένα ακόμη.</p>
-                )}
-              </CardContent>
-            </Card>
           </div>
-        </div>
+        )}
       </section>
     </main>
   );
 };
-
-const Stat = ({ label, value, colorClass }: { label: string; value: string; colorClass?: string }) => (
-  <div className="rounded-lg border p-4">
-    <div className="text-sm text-muted-foreground">{label}</div>
-    <div className="text-2xl font-semibold text-foreground mt-1 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent" style={colorClass ? undefined : undefined}>
-      <span className={colorClass ? `bg-clip-text text-transparent bg-gradient-to-r ${colorClass}` : ''}>{value}</span>
-    </div>
-  </div>
-);
 
 export default Index;

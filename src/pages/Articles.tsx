@@ -3,27 +3,35 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import ARTICLES from "@/content/articles";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useI18n } from "@/i18n";
 
 function formatCurrency(n: number) {
   return new Intl.NumberFormat("el-GR", { style: "currency", currency: "EUR" }).format(n);
 }
 
 const Articles = () => {
+  const { t, lang } = useI18n();
+
+  // Filter articles based on the current language
+  const filteredArticles = ARTICLES.filter((article) =>
+    lang === "el" ? article.slug.startsWith("ti-") || article.slug.startsWith("paradeigma-") : article.slug.startsWith("what-") || article.slug.startsWith("example-")
+  );
+
   return (
     <main className="min-h-screen bg-background">
       <Helmet>
-        <title>Άρθρα • anatokismos.gr</title>
-        <meta name="description" content="Άρθρα και επεξηγήσεις για τον σύνθετο τόκο και το πώς να τον χρησιμοποιήσετε για αποταμίευση και επενδύσεις (Ελληνικά)." />
+        <title>{t("articles.title")}</title>
+        <meta name="description" content={t("articles.description")} />
       </Helmet>
 
       <div className="container max-w-7xl mx-auto px-4 py-16">
         <header className="max-w-3xl mx-auto mb-16">
-          <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-foreground mb-6">Άρθρα — Ανατοκισμός</h1>
-          <p className="text-xl text-muted-foreground leading-relaxed">Επεξηγήσεις και παραδείγματα για τον σύνθετο τόκο, στην ελληνική γλώσσα.</p>
+          <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-foreground mb-6">{t("nav.articles")}</h1>
+          <p className="text-xl text-muted-foreground leading-relaxed">{t("articles.description")}</p>
         </header>
 
         <section className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {ARTICLES.map((a) => (
+          {filteredArticles.map((a) => (
             <Card key={a.slug} className="flex flex-col">
               <CardHeader className="space-y-3">
                 <CardTitle className="text-2xl font-bold tracking-tight">{a.title}</CardTitle>
@@ -35,7 +43,7 @@ const Articles = () => {
                   to={`/articles/${a.slug}`}
                   className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
                 >
-                  Διαβάστε περισσότερα →
+                  {t("articles.readMore")}
                 </Link>
               </div>
             </Card>
